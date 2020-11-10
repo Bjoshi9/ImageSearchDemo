@@ -25,7 +25,7 @@ import kotlinx.coroutines.launch
 
 class MainActivity : AppCompatActivity() {
     private var imageList: MutableList<ImageItem> = ArrayList()
-    private lateinit var newsViewModel: ImageViewModel
+    private lateinit var imageViewModel: ImageViewModel
     private var imageAdapter: ImageAdapter? = null
     private var mIsLoading = false
     private var mSearchText: String = ""
@@ -34,9 +34,9 @@ class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
-        newsViewModel = ViewModelProviders.of(this).get(ImageViewModel::class.java)
-        newsViewModel.init()
-        newsViewModel.getImageRepository().observe(this) { imageResponse ->
+        imageViewModel = ViewModelProviders.of(this).get(ImageViewModel::class.java)
+        imageViewModel.init()
+        imageViewModel.getImageRepository().observe(this) { imageResponse ->
             mIsLoading = false
             imageResponse?.let {
                 Log.d("RES", imageResponse.data.size.toString())
@@ -125,7 +125,7 @@ class MainActivity : AppCompatActivity() {
 
     private fun getImages() {
         mIsLoading = true
-        newsViewModel.searchImage(mSearchText, pageCount)
+        imageViewModel.searchImage(mSearchText, pageCount)
         progressBottom.visibility = View.VISIBLE
     }
 }
